@@ -23,12 +23,31 @@ int main()
         std::string device_id = req.get_param_value("device_id");
         if(device_id.empty())
         {
-            res.set_header("status", "500");
+            res.status = 400;
             res.set_content("Missing device_id parameter", "text/plain");
             return;
         }
-    });
 
+         
+        try {
+            json payload = json::parse(req.body);
+            if(payload.contains("content") && payload.contains("content_type"))
+            {
+                std::lock_guard<std::mutex> lock(clipboard_mutex);
+                clipboard_data[device_id] = payload;
+                res.status = 200;
+            }
+            else 
+            {
+                res.status = 400;
+                res.set_content("Invalid JSON payload", "text/plain");
+            }
+        }catch(const json::parse_error& e){
+            res.status = 400;
+            res.set_content("Invalid JSON format", "text/plain");
+        }
+    });
+   
     std::cout << "Clipboard server listening on port 8080..." << std::endl;
     serv.listen("0.0.0.0", 8080);
 
