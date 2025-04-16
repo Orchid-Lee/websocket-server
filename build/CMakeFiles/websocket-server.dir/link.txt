@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/websocket-server.dir/src/server.cpp.o -o ../output/websocket-server 
+/usr/bin/c++ CMakeFiles/websocket-server.dir/src/server.cpp.o -o websocket-server 

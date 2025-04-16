@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "../output/websocket-server"
-  "../output/websocket-server.pdb"
   "CMakeFiles/websocket-server.dir/src/server.cpp.o"
   "CMakeFiles/websocket-server.dir/src/server.cpp.o.d"
+  "websocket-server"
+  "websocket-server.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

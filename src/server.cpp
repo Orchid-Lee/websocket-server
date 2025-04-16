@@ -28,7 +28,6 @@ int main()
             return;
         }
 
-         
         try {
             json payload = json::parse(req.body);
             if(payload.contains("content") && payload.contains("content_type"))
