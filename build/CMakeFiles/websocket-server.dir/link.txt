@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/websocket-server.dir/src/server.cpp.o -o websocket-server 
+/usr/bin/c++  -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names "CMakeFiles/websocket-server.dir/src/server.cpp.o" -o websocket-server

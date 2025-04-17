@@ -46,6 +46,32 @@ int main()
             res.set_content("Invalid JSON format", "text/plain");
         }
     });
+
+    //获取最新剪切板内容(来自其他设备)
+    serv.Get("/clipboard", [&](const Request& req, Response& res){
+        std::string current_device_id = req.get_param_value("device_id");
+        if(current_device_id.empty())
+        {
+            res.status = 400;
+            res.set_content("Missing device_id parameter", "text/plain");
+            return;
+        }
+
+        json latest_content;
+        std::lock_guard<std::mutex> lock(clipboard_mutex);
+        for (const auto& pair : clipboard_data)
+        { 
+            std::cout << pair.first << ", " << pair.second << std::endl;
+            if(pair.first != current_device_id)
+            {
+                latest_content = pair.second;
+                break;
+            }
+        }
+        
+        res.set_header("Content-Type", "application/json");
+        res.set_content(latest_content.dump(), "application/json");
+    });
    
     std::cout << "Clipboard server listening on port 8080..." << std::endl;
     serv.listen("0.0.0.0", 8080);
